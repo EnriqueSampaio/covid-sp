@@ -3,6 +3,7 @@ import { TotalModule } from 'src/app/features/total/total.module';
 import { LayoutModule } from 'src/app/features/layout/layout.module';
 import { LastUpdateModule } from '../features/last-update/last-update.module';
 import { TitleModule } from '../features/title/title.module';
+import { SearchModule } from '../features/search/search.module';
 import { SharedModule } from '../shared/shared.module';
 
 
@@ -16,7 +17,8 @@ import { SharedModule } from '../shared/shared.module';
     TotalModule,
     LayoutModule,
     LastUpdateModule,
-    TitleModule
+    TitleModule,
+    SearchModule
   ]
 })
 export class FeaturesModule { }

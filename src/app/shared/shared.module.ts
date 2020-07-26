@@ -1,31 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ComponentsModule } from 'src/app/shared/components/components.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCalendarDay } from '@fortawesome/free-solid-svg-icons';
-import { MatChipsModule } from '@angular/material/chips';
-import { NgxEchartsModule } from 'ngx-echarts';
+import { CommonsModule } from './commons/commons.module';
+import { DirectivesModule } from './directives/directives.module';
+import { ComponentsModule } from './components/components.module';
+
 
 
 @NgModule({
   declarations: [],
-  imports: [
-    NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
-    })
-  ],
+  imports: [],
   exports: [
-    CommonModule,
-    ComponentsModule,
-    FlexLayoutModule,
-    FontAwesomeModule,
-    MatChipsModule,
-    NgxEchartsModule
+    CommonsModule,
+    DirectivesModule,
+    ComponentsModule
   ]
 })
-export class SharedModule {
-  constructor(library: FaIconLibrary) {
-    library.addIcons(faCalendarDay)
-  }
- }
+export class SharedModule { }

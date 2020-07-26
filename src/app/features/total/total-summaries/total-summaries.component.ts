@@ -20,10 +20,14 @@ export class TotalSummariesComponent implements OnInit {
       .pipe(take(1))
       .subscribe(() => {
         if (this.cityId) {
-          const city = this.dataService.getCity(this.cityId);
+          const city = this.dataService.getCityData(this.cityId);
           switch (this.feature) {
             case 'deaths':
               this.total = city[city.length - 1].deaths;
+              break;
+
+            case 'pop':
+              this.total = city[city.length - 1].est_pop;
               break;
 
             default:

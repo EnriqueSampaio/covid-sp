@@ -45,13 +45,13 @@ export class TotalSeriesComponent implements OnInit {
   merge: EChartOption;
 
   @Input() cityId: string;
-  constructor(private data: DataService, @Inject(LOCALE_ID) private locale: string, private cdr: ChangeDetectorRef) { }
+  constructor(private dataService: DataService, @Inject(LOCALE_ID) private locale: string, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.data.parseCompleted()
+    this.dataService.parseCompleted()
       .pipe(take(1))
       .subscribe(() => {
-        const city = this.data.getCity(this.cityId);
+        const city = this.dataService.getCityData(this.cityId);
         const [axis, occurr, deaths] = city
           .reduce((array, record) => {
             array[0].push(record.datetime.valueOf());

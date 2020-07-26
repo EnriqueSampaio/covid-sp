@@ -13,13 +13,13 @@ export class LastUpdateComponent implements OnInit {
   lastUpdate: Moment;
 
   @Input() cityId: string;
-  constructor(private data: DataService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.data.parseCompleted()
+    this.dataService.parseCompleted()
       .pipe(take(1))
       .subscribe(() => {
-        const city = this.data.getCity(this.cityId);
+        const city = this.dataService.getCityData(this.cityId);
         this.lastUpdate = city[city.length - 1].datetime;
       })
   }

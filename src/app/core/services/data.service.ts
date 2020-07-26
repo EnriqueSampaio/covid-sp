@@ -10,10 +10,12 @@ import { Papa, ParseConfig } from 'ngx-papaparse';
 export class DataService {
   private _data: Data[];
   private _cities: Map<string, Data[]>;
+  private _citiesIdx: Map<string, string>;
   private _parseCompleted: ReplaySubject<void>;
 
   constructor(private papa: Papa) {
     this._cities = new Map();
+    this._citiesIdx = new Map();
     this._parseCompleted = new ReplaySubject(1);
     const config: ParseConfig = {
       complete: (result) => {
@@ -26,6 +28,7 @@ export class DataService {
           } else {
             const cityData = [data];
             this._cities.set(data.ibge_cod, cityData);
+            this._citiesIdx.set(data.ibge_cod, data.city);
           }
 
           return data;
@@ -125,8 +128,20 @@ export class DataService {
     return this._data;
   }
 
-  getCity(id: string) {
+  getCityData(id: string) {
     return this._cities.get(id);
+  }
+
+  getCityName(id: string) {
+    return this._citiesIdx.get(id);
+  }
+
+  getCitiesList() {
+    const cities = [];
+    for (const [id, name] of this._citiesIdx.entries()) {
+      cities.push({ id: id, name: name });
+    }
+    return cities;
   }
 
   parseCompleted() {

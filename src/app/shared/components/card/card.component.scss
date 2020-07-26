@@ -17,6 +17,12 @@ $config: mat-typography-config();
   }
 }
 
+:host-context(.info) {
+  mat-card {
+    @include addColor(#b5b5b5);
+  }
+}
+
 :host-context(.success) {
   mat-card {
     @include addColor($success);

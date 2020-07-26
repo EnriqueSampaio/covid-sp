@@ -5,6 +5,7 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import localePt from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 registerLocaleData(localePt, 'pt');
 
@@ -14,7 +15,8 @@ registerLocaleData(localePt, 'pt');
   ],
   imports: [
     CoreModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatProgressBarModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' }

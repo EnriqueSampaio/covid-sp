@@ -1,3 +1,4 @@
+@import '~@angular/material/theming';
 $primary: #ffd400;
 $secondary: #414042;
 $danger: #dc3545;
@@ -33,6 +34,8 @@ $mat-brabo-primary: (
     A200 : #000000,
     A400 : #000000,
     A700 : #000000,
+    dark: #ffffff,
+    light: #000000
   )
 );
 
@@ -66,6 +69,8 @@ $mat-brabo-secondary: (
     A200 : #ffffff,
     A400 : #ffffff,
     A700 : #ffffff,
+    dark: #ffffff,
+    light: #000000
   )
 );
 

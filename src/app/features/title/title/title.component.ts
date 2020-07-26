@@ -11,13 +11,13 @@ export class TitleComponent implements OnInit {
   cityName: string;
 
   @Input() cityId: string;
-  constructor(private data: DataService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.data.parseCompleted()
+    this.dataService.parseCompleted()
       .pipe(take(1))
       .subscribe(() => {
-        this.cityName = this.data.getCity(this.cityId)[0].city;
+        this.cityName = this.dataService.getCityName(this.cityId);
       });
   }
 

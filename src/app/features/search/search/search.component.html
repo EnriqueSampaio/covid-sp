@@ -1,0 +1,11 @@
+<mat-form-field color="primary">
+  <input matInput [formControl]="searchControl" [matAutocomplete]="auto" type="text" placeholder="Município..." >
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="display" (optionSelected)="citySelected.emit($event.option.value)">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+      {{option.name}}
+    </mat-option>
+    <mat-option *ngIf="!(filteredOptions | async).length && searchControl.dirty" i18n>
+      Município não encontrado
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>

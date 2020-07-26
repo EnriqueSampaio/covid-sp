@@ -1,16 +1,17 @@
 import { NgModule } from '@angular/core';
-import { MatCardModule } from "@angular/material/card";
 import { CardComponent } from './card/card.component';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { BackButtonComponent } from './back-button/back-button.component';
+import { CommonsModule } from '../commons/commons.module';
+import { DirectivesModule } from '../directives/directives.module';
 
 
 
 @NgModule({
-  declarations: [CardComponent],
+  declarations: [CardComponent, BackButtonComponent],
   imports: [
-    MatCardModule,
-    FlexLayoutModule
+    CommonsModule,
+    DirectivesModule
   ],
-  exports: [CardComponent]
+  exports: [CardComponent, BackButtonComponent]
 })
 export class ComponentsModule { }
