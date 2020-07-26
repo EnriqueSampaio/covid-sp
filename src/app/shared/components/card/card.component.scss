@@ -1,0 +1,48 @@
+@import 'scss/variables';
+
+@mixin addColor($color) {
+  background-color: transparentize($color, 0.8);
+  border-color: $color;
+  color: $color;
+}
+
+:host(.transparent.dark) {
+  mat-card {
+    background-color: transparent;
+    border-color: transparent;
+    color: #fff;
+  }
+}
+
+:host-context(.success) {
+  mat-card {
+    @include addColor($success);
+  }
+}
+
+:host-context(.danger) {
+  mat-card {
+    @include addColor($danger);
+  }
+}
+
+:host-context(.primary) {
+  mat-card {
+    @include addColor($primary);
+  }
+}
+
+:host-context(.secondary) {
+  mat-card {
+    @include addColor($secondary);
+  }
+}
+
+mat-card {
+  border: 2px solid;
+  mat-card-content {
+    font-size: 32px;
+    font-weight: 600;
+    text-align: center;
+  }
+}

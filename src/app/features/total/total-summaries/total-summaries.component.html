@@ -1,0 +1,10 @@
+<app-card>
+  <ng-container header>
+    <h2 i18n>
+      {feature, select, occurr {Ocorrências} deaths {Óbitos} other {Ocorrências}}
+    </h2>
+  </ng-container>
+  <ng-container content>
+    {{this.total}}
+  </ng-container>
+</app-card>

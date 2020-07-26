@@ -1,0 +1,81 @@
+$primary: #ffd400;
+$secondary: #414042;
+$danger: #dc3545;
+$success: #28a745;
+
+$mat-brabo-primary: (
+  50 : #fffae0,
+  100 : #fff2b3,
+  200 : #ffea80,
+  300 : #ffe14d,
+  400 : #ffda26,
+  500 : #ffd400,
+  600 : #ffcf00,
+  700 : #ffc900,
+  800 : #ffc300,
+  900 : #ffb900,
+  A100 : #ffffff,
+  A200 : #fffbf2,
+  A400 : #ffebbf,
+  A700 : #ffe3a6,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #000000,
+    500 : #000000,
+    600 : #000000,
+    700 : #000000,
+    800 : #000000,
+    900 : #000000,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+
+$mat-brabo-secondary: (
+  50 : #e8e8e8,
+  100 : #c6c6c6,
+  200 : #a0a0a1,
+  300 : #7a797b,
+  400 : #5e5d5e,
+  500 : #414042,
+  600 : #3b3a3c,
+  700 : #323233,
+  800 : #2a2a2b,
+  900 : #1c1c1d,
+  A100 : #7575f2,
+  A200 : #4747ee,
+  A400 : #0202ff,
+  A700 : #0000e8,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
+);
+
+$custom-collection: (
+  warning :  #ffc107,
+  success :  #28a745,
+  danger:    #dc3545,
+  contrast: (
+    warning :  #343a40,
+    success :  #FFFFFF,
+    danger:    #FFFFFF
+  )
+);
