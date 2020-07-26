@@ -1,4 +1,7 @@
 @import 'scss/variables';
+@import '~@angular/material/theming';
+
+$config: mat-typography-config();
 
 @mixin addColor($color) {
   background-color: transparentize($color, 0.8);
@@ -41,8 +44,7 @@
 mat-card {
   border: 2px solid;
   mat-card-content {
-    font-size: 32px;
-    font-weight: 600;
+    @include mat-typography-level-to-styles($config, display-3);
     text-align: center;
   }
 }
