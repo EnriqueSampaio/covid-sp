@@ -4,6 +4,7 @@ import { LayoutModule } from 'src/app/features/layout/layout.module';
 import { LastUpdateModule } from '../features/last-update/last-update.module';
 import { TitleModule } from '../features/title/title.module';
 import { SearchModule } from '../features/search/search.module';
+import { DailyModule } from '../features/daily/daily.module';
 import { SharedModule } from '../shared/shared.module';
 
 
@@ -18,7 +19,8 @@ import { SharedModule } from '../shared/shared.module';
     LayoutModule,
     LastUpdateModule,
     TitleModule,
-    SearchModule
+    SearchModule,
+    DailyModule
   ]
 })
 export class FeaturesModule { }

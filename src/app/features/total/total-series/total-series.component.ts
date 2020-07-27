@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy, Input, Inject, LOCALE_ID, ChangeDetectorRef } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
-import { EChartOption } from 'echarts';
+import { EChartOption, EChartsOptionConfig } from 'echarts';
 import { take } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 import '../../../shared/themes/brabo';
@@ -13,13 +13,17 @@ import '../../../shared/themes/brabo';
 export class TotalSeriesComponent implements OnInit {
   occurrLabel: string = $localize`Ocorrências`;
   deathsLabel: string = $localize`Óbitos`;
+  initOpts = {
+    renderer: 'svg'
+  };
   options: EChartOption = {
     xAxis: {
       type: 'category',
       axisLabel: {
         formatter: (value) => {
           return formatDate(value, 'MMM d', this.locale)
-        }
+        },
+        rotate: 45,
       }
     },
     yAxis: {
@@ -28,7 +32,6 @@ export class TotalSeriesComponent implements OnInit {
     tooltip: {
       trigger: 'axis',
       formatter: (params) => {
-        // console.log(params);
         return `
           ${formatDate(params[0].name, 'shortDate', this.locale)}
           <span style="display:block;text-align:left;width:100%">
@@ -55,11 +58,11 @@ export class TotalSeriesComponent implements OnInit {
         const [axis, occurr, deaths] = city
           .reduce((array, record) => {
             array[0].push(record.datetime.valueOf());
-            // array[0].push(formatDate(record.datetime.toDate(), 'MMM d', this.locale));
             array[1].push(record.occurr);
             array[2].push(record.deaths);
             return array;
           }, [[], [], []]);
+
         this.merge = {
           xAxis: {
             data: axis

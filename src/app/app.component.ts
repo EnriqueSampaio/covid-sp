@@ -16,7 +16,6 @@ export class AppComponent {
     this.router.events.subscribe((event: Event) => {
       switch (true) {
         case event instanceof NavigationStart: {
-          console.log('entrou');
           this.loading = true;
           this.dataService.parseCompleted()
             .pipe(take(1),
