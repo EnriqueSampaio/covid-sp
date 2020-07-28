@@ -19,7 +19,13 @@ $config: mat-typography-config();
 
 :host-context(.info) {
   mat-card {
-    @include addColor(#b5b5b5);
+    @include addColor($info);
+  }
+}
+
+:host-context(.warn) {
+  mat-card {
+    @include addColor($warn);
   }
 }
 

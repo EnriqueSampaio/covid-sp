@@ -3,7 +3,9 @@
 $config: mat-typography-config();
 
 .home-page {
-  min-height: calc(100vh - 30px);
+  height: calc(100% - 30px);
+  position: absolute;
+  width: calc(100% - 30px);
   h1 {
     text-align: center;
   }

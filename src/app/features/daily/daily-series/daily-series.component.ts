@@ -1,18 +1,17 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Inject, LOCALE_ID, ChangeDetectorRef } from '@angular/core';
-import { DataService } from 'src/app/core/services/data.service';
-import { EChartOption, EChartsOptionConfig } from 'echarts';
-import { take } from 'rxjs/operators';
+import { Component, OnInit, Input, Inject, LOCALE_ID } from '@angular/core';
+import { EChartOption } from 'echarts';
 import { formatDate } from '@angular/common';
-import '../../../shared/themes/brabo';
+import { DataService } from 'src/app/core/services/data.service';
+import { take } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-total-series',
-  templateUrl: './total-series.component.html',
-  styleUrls: ['./total-series.component.scss']
+  selector: 'app-daily-series',
+  templateUrl: './daily-series.component.html',
+  styleUrls: ['./daily-series.component.scss']
 })
-export class TotalSeriesComponent implements OnInit {
-  occurrLabel: string = $localize`Casos confirmados`;
-  deathsLabel: string = $localize`Óbitos`;
+export class DailySeriesComponent implements OnInit {
+  occurrLabel: string = $localize`Novos casos`;
+  deathsLabel: string = $localize`Novos óbitos`;
   initOpts = {
     renderer: 'svg'
   };
@@ -69,8 +68,8 @@ export class TotalSeriesComponent implements OnInit {
         const [axis, occurr, deaths] = city
           .reduce((array, record) => {
             array[0].push(record.datetime.valueOf());
-            array[1].push(record.occurr);
-            array[2].push(record.deaths);
+            array[1].push(record.new_occurr);
+            array[2].push(record.new_deaths);
             return array;
           }, [[], [], []]);
 
@@ -82,17 +81,18 @@ export class TotalSeriesComponent implements OnInit {
             {
               name: this.occurrLabel,
               data: occurr,
-              type: 'line',
+              type: 'bar',
               areaStyle: {}
             },
             {
               name: this.deathsLabel,
               data: deaths,
-              type: 'line',
+              type: 'bar',
               areaStyle: {}
             }
           ]
         };
       });
   }
+
 }

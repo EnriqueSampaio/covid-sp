@@ -1,1 +1,7 @@
-<h1>{{cityName}}</h1>
+<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="5px">
+  <h1>{{cityName}}</h1>
+  <a matTooltip="Fonte: SEADE (https://www.seade.gov.br/coronavirus/)" href="https://www.seade.gov.br/coronavirus/"
+    target="_blank">
+    <fa-icon class="info" [icon]="['fas', 'info-circle']"></fa-icon>
+  </a>
+</div>
