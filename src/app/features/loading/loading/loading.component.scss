@@ -1,0 +1,9 @@
+@import 'scss/variables';
+
+.loading {
+  background-color: transparentize($color: $secondary, $amount: 0.2);
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
