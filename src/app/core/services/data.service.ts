@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Data } from 'src/app/shared/models/data.model';
 import { environment } from 'src/environments/environment';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, forkJoin } from 'rxjs';
 import { Papa, ParseConfig } from 'ngx-papaparse';
+import { HttpClient } from '@angular/common/http';
+import { finalize } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +14,14 @@ export class DataService {
   private _cities: Map<string, Data[]>;
   private _citiesIdx: Map<string, string>;
   private _parseCompleted: ReplaySubject<void>;
+  private _geo: any;
+  private _geoCompleted: ReplaySubject<void>;
 
-  constructor(private papa: Papa) {
+  constructor(private papa: Papa, private http: HttpClient) {
     this._cities = new Map();
     this._citiesIdx = new Map();
     this._parseCompleted = new ReplaySubject(1);
+    this._geoCompleted = new ReplaySubject(1);
     const config: ParseConfig = {
       complete: (result) => {
         this._data = result.data.map((record) => {
@@ -58,7 +63,9 @@ export class DataService {
           case 'est_pop60':
           case 'epidem_week':
             return +value;
-
+          case 'latitude':
+          case 'longitude':
+            return value.replace(',', '.');
         }
         return value;
       },
@@ -122,10 +129,24 @@ export class DataService {
       }
     };
     this.papa.parse(environment.source, config);
+
+    this.http.get('https://raw.githubusercontent.com/tbrugz/geodata-br/master/geojson/geojs-35-mun.json')
+      .pipe(finalize(() => this._geoCompleted.next()))
+      .subscribe((geo) => {
+        this._geo = geo;
+      });
   }
 
   get data() {
     return this._data;
+  }
+
+  get geo() {
+    return this._geo;
+  }
+
+  getCities() {
+    return this._cities;
   }
 
   getCityData(id: string) {
@@ -146,5 +167,9 @@ export class DataService {
 
   parseCompleted() {
     return this._parseCompleted;
+  }
+
+  geoCompleted() {
+    return this._geoCompleted;
   }
 }

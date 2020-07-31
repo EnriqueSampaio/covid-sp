@@ -3,6 +3,8 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
+import * as echarts from 'echarts';
+import 'echarts-leaflet';
 import 'src/app/shared/themes/brabo';
 
 if (environment.production) {
