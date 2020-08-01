@@ -24,20 +24,22 @@ export class DataService {
     this._geoCompleted = new ReplaySubject(1);
     const config: ParseConfig = {
       complete: (result) => {
-        this._data = result.data.map((record) => {
-          const data = new Data(record as Data);
-          if (this._cities.has(data.ibge_cod)) {
-            const cityData = this._cities.get(data.ibge_cod);
-            cityData.push(data);
-            this._cities.set(data.ibge_cod, cityData);
-          } else {
-            const cityData = [data];
-            this._cities.set(data.ibge_cod, cityData);
-            this._citiesIdx.set(data.ibge_cod, data.city);
-          }
+        this._data = result.data
+          .filter((record) => record.city.length)
+          .map((record) => {
+            const data = new Data(record as Data);
+            if (this._cities.has(data.ibge_cod)) {
+              const cityData = this._cities.get(data.ibge_cod);
+              cityData.push(data);
+              this._cities.set(data.ibge_cod, cityData);
+            } else {
+              const cityData = [data];
+              this._cities.set(data.ibge_cod, cityData);
+              this._citiesIdx.set(data.ibge_cod, data.city);
+            }
 
-          return data;
-        });
+            return data;
+          });
 
         this._parseCompleted.next();
       },

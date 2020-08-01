@@ -3,8 +3,8 @@ import { EChartOption, ECharts } from 'echarts';
 import * as L from 'leaflet';
 import 'leaflet-boundary-canvas';
 import { DataService } from 'src/app/core/services/data.service';
-import { forkJoin, combineLatest } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-total-map',
@@ -26,15 +26,9 @@ export class TotalMapComponent implements OnInit {
         urlTemplate: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
       }]
     },
-    visualMap: [{
-      type: 'continuous',
-      min: 0,
-      max: 5000,
-      inRange: {
-        color: ['orange', 'red'],
-        opacity: [0.5, 0.8]
-      }
-    }],
+    tooltip: {
+      trigger: 'item'
+    }
   };
 
   merge: EChartOption;
@@ -42,7 +36,9 @@ export class TotalMapComponent implements OnInit {
   ec: ECharts;
   map: L.Map;
 
-  constructor(private dataService: DataService) { }
+  redirecting: boolean;
+
+  constructor(private router: Router, private dataService: DataService) { }
 
   ngOnInit(): void {
   }
@@ -57,19 +53,54 @@ export class TotalMapComponent implements OnInit {
 
         for (const [id, city] of cities.entries()) {
           const lastData = city[city.length - 1];
-          data.push([lastData.longitude, lastData.latitude, lastData.occurr]);
+          data.push({
+            id: lastData.ibge_cod,
+            name: lastData.city,
+            value: [lastData.longitude, lastData.latitude, lastData.occurr]
+          });
         }
 
+        const sortedData = data.sort((a, b) => b.value[2] - a.value[2]);
+
         this.merge = {
-          series: [{
-            type: 'scatter',
-            coordinateSystem: 'leaflet',
-            data: data,
-            progressiveThreshold: 200,
-            symbolSize: function (value) {
-              return value[2] > 0 ? Math.log(value[2]) * 2 : 0;
+          visualMap: [{
+            type: 'continuous',
+            min: sortedData[sortedData.length - 1].value[2],
+            max: sortedData[10].value[2],
+            inRange: {
+              color: ['orange', 'red'],
+              opacity: [0.4, 0.8]
+            },
+          }],
+          series: [
+            {
+              type: 'scatter',
+              coordinateSystem: 'leaflet',
+              data: sortedData.slice(10),
+              encode: {
+                value: 2
+              },
+              symbolSize: function (value) {
+                return value[2] > 0 ? Math.log(value[2]) * 3 : 0;
+              },
+              hoverAnimation: true
+            },
+            {
+              type: 'effectScatter',
+              coordinateSystem: 'leaflet',
+              data: sortedData.slice(0, 10),
+              encode: {
+                value: 2
+              },
+              symbolSize: function (value) {
+                return value[2] > 0 ? Math.log(value[2]) * 3 : 0;
+              },
+              rippleEffect: {
+                brushType: 'stroke'
+              },
+              hoverAnimation: true,
             }
-          }]
+          ]
         };
       });
   }
@@ -104,5 +135,12 @@ export class TotalMapComponent implements OnInit {
       });
 
     this.ec.off('finished');
+  }
+
+  onClick(event) {
+    this.redirecting = true;
+    setTimeout(() => {
+      this.router.navigate(['city', event.data.id]);
+    }, 100);
   }
 }
