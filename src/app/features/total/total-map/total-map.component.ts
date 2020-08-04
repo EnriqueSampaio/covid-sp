@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { EChartOption, ECharts } from 'echarts';
 import * as L from 'leaflet';
 import 'leaflet-boundary-canvas';
 import { DataService } from 'src/app/core/services/data.service';
 import { take } from 'rxjs/operators';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-total-map',
@@ -21,7 +20,7 @@ export class TotalMapComponent implements OnInit {
       center: [-48.5962357, -22.286816],
       roam: true,
       zoom: 10,
-      // zoomSnap: 0.25,
+      zoomSnap: 0.25,
       tiles: [{
         urlTemplate: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
       }]
@@ -36,9 +35,9 @@ export class TotalMapComponent implements OnInit {
   ec: ECharts;
   map: L.Map;
 
-  redirecting: boolean;
+  @Output() citySelected: EventEmitter<{ id: string, name: string }> = new EventEmitter();
 
-  constructor(private router: Router, private dataService: DataService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
   }
@@ -51,7 +50,7 @@ export class TotalMapComponent implements OnInit {
         const cities = this.dataService.getCities();
         const data = [];
 
-        for (const [id, city] of cities.entries()) {
+        for (const [, city] of cities.entries()) {
           const lastData = city[city.length - 1];
           data.push({
             id: lastData.ibge_cod,
@@ -67,6 +66,8 @@ export class TotalMapComponent implements OnInit {
             type: 'continuous',
             min: sortedData[sortedData.length - 1].value[2],
             max: sortedData[10].value[2],
+            left: 'auto',
+            right: 0,
             inRange: {
               color: ['orange', 'red'],
               opacity: [0.4, 0.8]
@@ -112,6 +113,7 @@ export class TotalMapComponent implements OnInit {
         //@ts-ignore
         this.map = this.ec.getModel().getComponent('leaflet').getLeaflet();
         this.map.whenReady(() => {
+          this.map.removeControl(this.map.zoomControl);
           //@ts-ignore
           L.TileLayer.boundaryCanvas('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
             boundary: this.dataService.geo,
@@ -138,9 +140,6 @@ export class TotalMapComponent implements OnInit {
   }
 
   onClick(event) {
-    this.redirecting = true;
-    setTimeout(() => {
-      this.router.navigate(['city', event.data.id]);
-    }, 100);
+    this.citySelected.emit({ id: event.data.id, name: event.data.name });
   }
 }

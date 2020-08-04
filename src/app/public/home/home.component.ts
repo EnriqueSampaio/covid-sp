@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  redirecting: boolean;
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
@@ -16,6 +18,9 @@ export class HomeComponent implements OnInit {
   }
 
   citySelected(city) {
-    this.router.navigate(['city', city.id]);
+    this.redirecting = true;
+    setTimeout(() => {
+      this.router.navigate(['city', city.id]);
+    }, 100);
   }
 }

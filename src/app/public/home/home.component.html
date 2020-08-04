@@ -1,5 +1,18 @@
 <app-loading></app-loading>
-<app-total-map></app-total-map>
+<mat-drawer-container>
+  <mat-drawer mode="side" opened>
+    <div class="drawer-wrapper" fxLayout="column">
+      <h1>COVID-SP</h1>
+      <h3 i18n>Acompanhe a situação do seu município</h3>
+      <div class="search">
+        <app-search (citySelected)="citySelected($event)"></app-search>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-total-map *ngIf="!redirecting" (citySelected)="citySelected($event)"></app-total-map>
+  </mat-drawer-content>
+</mat-drawer-container>
 <!--
 <app-inner-pages>
   <ng-container inner>

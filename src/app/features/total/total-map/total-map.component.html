@@ -1,2 +1,2 @@
-<div *ngIf="!redirecting" echarts theme="brabo" [initOpts]="initOpts" [options]="options" [merge]="merge" [autoResize]="true" (chartInit)="onChartInit($event)"
+<div echarts theme="brabo" [initOpts]="initOpts" [options]="options" [merge]="merge" [autoResize]="true" (chartInit)="onChartInit($event)"
   (chartFinished)="onChartFinished()" (chartClick)="onClick($event)"></div>

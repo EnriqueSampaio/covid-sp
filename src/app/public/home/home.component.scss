@@ -1,20 +1,31 @@
 @import '~@angular/material/theming';
 
-$config: mat-typography-config();
-
-.home-page {
-  height: calc(100% - 30px);
-  position: absolute;
-  width: calc(100% - 30px);
-  h1 {
-    text-align: center;
-  }
-
-  h3 {
-    text-align: center;
-  }
-
-  .search {
-    width: 100%;
+mat-drawer-container {
+  height: 100%;
+  mat-drawer {
+    padding: 15px;
+    .drawer-wrapper {
+      height: 100%;
+      .search {
+        overflow: hidden;
+      }
+    }
   }
 }
+
+// .home-page {
+//   height: calc(100% - 30px);
+//   position: absolute;
+//   width: calc(100% - 30px);
+//   h1 {
+//     text-align: center;
+//   }
+
+//   h3 {
+//     text-align: center;
+//   }
+
+//   .search {
+//     width: 100%;
+//   }
+// }
