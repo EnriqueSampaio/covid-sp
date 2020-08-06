@@ -3,7 +3,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FaIconLibrary, FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCalendarDay, faArrowLeft, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarDay, faArrowLeft, faInfoCircle, faBars } from '@fortawesome/free-solid-svg-icons';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -47,6 +47,6 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 })
 export class CommonsModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faCalendarDay, faArrowLeft, faInfoCircle);
+    library.addIcons(faCalendarDay, faArrowLeft, faInfoCircle, faBars);
   }
  }

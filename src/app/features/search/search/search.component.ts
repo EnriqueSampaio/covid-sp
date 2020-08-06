@@ -23,15 +23,13 @@ export class SearchComponent implements OnInit {
       .pipe(take(1))
       .subscribe(() => {
         this.options = this.dataService.getCitiesList();
-        this.filteredOptions = of(this.options);
+        this.filteredOptions = this.searchControl.valueChanges
+          .pipe(
+            startWith(''),
+            map((value) => typeof value === 'string' ? value : value.name),
+            map((name) => name ? this._filter(name) : this.options)
+          );
       });
-
-    this.filteredOptions = this.searchControl.valueChanges
-      .pipe(
-        startWith(''),
-        map((value) => typeof value === 'string' ? value : value.name),
-        map((name) => name ? this._filter(name) : this.options)
-    )
   }
 
   display(city) {

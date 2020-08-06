@@ -10,7 +10,7 @@
           {{option.name}}
         </button>
       </mat-list-item>
-      <mat-list-item *ngIf="!(filteredOptions | async).length && searchControl.dirty" i18n>
+      <mat-list-item *ngIf="!(filteredOptions | async)?.length && searchControl.dirty" i18n>
         Município não encontrado
       </mat-list-item>
     </ngx-simplebar>

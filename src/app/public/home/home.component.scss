@@ -1,14 +1,23 @@
 @import '~@angular/material/theming';
 
-mat-drawer-container {
+mat-sidenav-container {
   height: 100%;
-  mat-drawer {
+  mat-sidenav {
     padding: 15px;
-    .drawer-wrapper {
+    .sidenav-wrapper {
       height: 100%;
       .search {
         overflow: hidden;
       }
+    }
+  }
+  mat-sidenav-content {
+    position: relative;
+    .sidenav-btn {
+      left: 15px;
+      position: absolute;
+      top: 15px;
+      z-index: 999;
     }
   }
 }

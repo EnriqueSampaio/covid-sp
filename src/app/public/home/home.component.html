@@ -1,32 +1,18 @@
-<app-loading></app-loading>
-<mat-drawer-container>
-  <mat-drawer mode="side" opened>
-    <div class="drawer-wrapper" fxLayout="column">
+<!-- <app-loading></app-loading> -->
+<mat-sidenav-container>
+  <mat-sidenav #nav [fixedInViewport]="true" [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="!mobileQuery.matches || opened">
+    <div class="sidenav-wrapper" fxLayout="column">
       <h1>COVID-SP</h1>
       <h3 i18n>Acompanhe a situação do seu município</h3>
       <div class="search">
         <app-search (citySelected)="citySelected($event)"></app-search>
       </div>
     </div>
-  </mat-drawer>
-  <mat-drawer-content>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <button color="basic" class="sidenav-btn" mat-fab (click)="nav.toggle()">
+      <fa-icon [icon]="['fas', 'bars']"></fa-icon>
+    </button>
     <app-total-map *ngIf="!redirecting" (citySelected)="citySelected($event)"></app-total-map>
-  </mat-drawer-content>
-</mat-drawer-container>
-<!--
-<app-inner-pages>
-  <ng-container inner>
-    <div class="home-page" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
-      <div class="wrapper">
-        <app-total-map></app-total-map>
-        <div>
-          <h1 ngClass="mat-display-4" [ngClass.lt-sm]="{'mat-display-4': false, 'mat-display-2': true}">COVID-SP</h1>
-          <h3 i18n>Acompanhe a situação do seu município</h3>
-        </div>
-        <div class="search">
-          <app-search (citySelected)="citySelected($event)"></app-search>
-        </div>
-      </div>
-    </div>
-  </ng-container>
-</app-inner-pages> -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

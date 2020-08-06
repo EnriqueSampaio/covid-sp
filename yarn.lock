@@ -3341,12 +3341,20 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
+echarts-extension-gmap@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/echarts-extension-gmap/-/echarts-extension-gmap-1.0.4.tgz#5ecc292cab2566e6a71402a7c2dc580128b005a0"
+  integrity sha512-BjwAOHNHrAyH/hnoeSRWaAe+qOOU4LwrM+KLMkBOPkltbUc85Q1y3S65nTNPQ7DN5sQRBRrP5efbbR9jcPkPBQ==
+  dependencies:
+    echarts "^4.7.0"
+    lodash.debounce "^4.0.8"
+
 echarts-leaflet@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/echarts-leaflet/-/echarts-leaflet-1.1.0.tgz#6e6f282d1fc1472158296f1bc9ecdd1babea2a9a"
   integrity sha512-32R1BX2Ra3r+12sieGELN+aByDGd1zHhgSobVhxrJtkOsgMjbOoZsb73S8dmv+N0b6E32YRqprpzGeFYbYkaEg==
 
-echarts@^4.8.0:
+echarts@^4.7.0, echarts@^4.8.0:
   version "4.8.0"
   resolved "https://registry.yarnpkg.com/echarts/-/echarts-4.8.0.tgz#b2c1cfb9229b13d368ee104fc8eea600b574d4c4"
   integrity sha512-YwShpug8fWngj/RlgxDaYrLBoD+LsZUArrusjNPHpAF+is+gGe38xx4W848AwWMGoi745t3OXM52JedNrv+F6g==

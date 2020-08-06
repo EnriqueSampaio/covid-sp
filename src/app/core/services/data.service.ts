@@ -171,7 +171,7 @@ export class DataService {
     return this._parseCompleted;
   }
 
-  geoCompleted() {
-    return this._geoCompleted;
-  }
+  // geoCompleted() {
+  //   return this._geoCompleted;
+  // }
 }
