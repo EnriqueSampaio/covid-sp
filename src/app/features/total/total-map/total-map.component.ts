@@ -22,7 +22,9 @@ export class TotalMapComponent implements OnInit {
       zoom: 10,
       zoomSnap: 0.25,
       tiles: [{
-        urlTemplate: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png'
+        urlTemplate: 'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+        maxZoom: 18,
+        tileSize: 512,
       }]
     },
     tooltip: {
@@ -44,20 +46,25 @@ export class TotalMapComponent implements OnInit {
 
   onChartInit(ec) {
     this.ec = ec;
-    this.dataService.parseCompleted()
-      .pipe(take(1))
-      .subscribe(() => {
-        const cities = this.dataService.getCities();
-        const data = [];
+    this.dataService.getLatestData()
+      .subscribe((cities) => {
+        // const docs = cities.docs;
+        const data = cities.docs.map((city) => {
+          return {
+            id: city.get('ibge_cod'),
+            name: city.get('city'),
+            value: [city.get('geo').longitude, city.get('geo').latitude, city.get('occurr')]
+          }
+        })
 
-        for (const [, city] of cities.entries()) {
-          const lastData = city[city.length - 1];
-          data.push({
-            id: lastData.ibge_cod,
-            name: lastData.city,
-            value: [lastData.longitude, lastData.latitude, lastData.occurr]
-          });
-        }
+        // for (const [, city] of cities.entries()) {
+        //   const lastData = city[city.length - 1];
+        //   data.push({
+        //     id: lastData.ibge_cod,
+        //     name: lastData.city,
+        //     value: [lastData.longitude, lastData.latitude, lastData.occurr]
+        //   });
+        // }
 
         const sortedData = data.sort((a, b) => b.value[2] - a.value[2]);
 
@@ -114,6 +121,9 @@ export class TotalMapComponent implements OnInit {
         this.map = this.ec.getModel().getComponent('leaflet').getLeaflet();
         this.map.whenReady(() => {
           this.map.removeControl(this.map.zoomControl);
+          if (L.Browser.mobile) {
+            this.map.tap.disable();
+          }
           //@ts-ignore
           L.TileLayer.boundaryCanvas('https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png', {
             boundary: this.dataService.geo,

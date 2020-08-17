@@ -16,24 +16,20 @@ export class TotalSummariesComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.parseCompleted()
-      .pipe(take(1))
-      .subscribe(() => {
-        if (this.cityId) {
-          const city = this.dataService.getCityData(this.cityId);
-          switch (this.feature) {
-            case 'deaths':
-              this.total = city[city.length - 1].deaths;
-              break;
+    this.dataService.getLatestCityData(this.cityId)
+      .subscribe((city) => {
+        switch (this.feature) {
+          case 'deaths':
+            this.total = city.get('deaths');
+            break;
 
-            case 'pop':
-              this.total = city[city.length - 1].est_pop;
-              break;
+          case 'pop':
+            this.total = city.get('est_pop');
+            break;
 
-            default:
-              this.total = city[city.length - 1].occurr;
-              break;
-          }
+          default:
+            this.total = city.get('occurr');
+            break;
         }
       });
   }

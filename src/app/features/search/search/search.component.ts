@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { DataService } from 'src/app/core/services/data.service';
 import { take, startWith, map } from 'rxjs/operators';
 
@@ -19,10 +19,16 @@ export class SearchComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.parseCompleted()
+    this.dataService.getLatestData()
       .pipe(take(1))
-      .subscribe(() => {
-        this.options = this.dataService.getCitiesList();
+      .subscribe((cities) => {
+        this.options = cities.docs
+          .map((city) => {
+            return {
+              id: city.get('ibge_cod'),
+              name: city.get('city')
+            };
+          });
         this.filteredOptions = this.searchControl.valueChanges
           .pipe(
             startWith(''),

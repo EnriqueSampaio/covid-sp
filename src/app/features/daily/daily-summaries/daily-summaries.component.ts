@@ -16,20 +16,16 @@ export class DailySummariesComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.parseCompleted()
-      .pipe(take(1))
-      .subscribe(() => {
-        if (this.cityId) {
-          const city = this.dataService.getCityData(this.cityId);
-          switch (this.feature) {
-            case 'deaths':
-              this.total = city[city.length - 1].new_deaths;
-              break;
+    this.dataService.getLatestCityData(this.cityId)
+      .subscribe((city) => {
+        switch (this.feature) {
+          case 'deaths':
+            this.total = city.get('new_deaths');
+            break;
 
-            default:
-              this.total = city[city.length - 1].new_occurr;
-              break;
-          }
+          default:
+            this.total = city.get('new_occurr');
+            break;
         }
       })
   }

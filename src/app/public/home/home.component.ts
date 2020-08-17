@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   citySelected(city) {
     this.redirecting = true;
+    console.log(city);
     setTimeout(() => {
       this.router.navigate(['city', city.id]);
     }, 100);

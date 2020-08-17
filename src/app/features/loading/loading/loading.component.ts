@@ -13,11 +13,11 @@ export class LoadingComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.loading = true;
-    this.dataService.parseCompleted()
-    .pipe(take(1),
-      finalize(() => this.loading = false)
-    ).subscribe();
+    // this.loading = true;
+    // this.dataService.parseCompleted()
+    // .pipe(take(1),
+    //   finalize(() => this.loading = false)
+    // ).subscribe();
   }
 
 }

@@ -1,12 +1,12 @@
-import * as moment from "moment";
-import { Moment } from "moment-timezone";
+import { firestore } from 'firebase/app';
+import Timestamp = firestore.Timestamp;
 
 export class Data {
   city: string;
   ibge_cod: string;
   day: number;
   month: number;
-  datetime: Moment;
+  datetime: Timestamp;
   occurr: number;
   new_occurr: number;
   occurr_ph: number;
@@ -30,9 +30,9 @@ export class Data {
   epidem_week: number;
 
   constructor(obj: Data = {} as Data) {
-    if (obj.datetime) {
-      obj.datetime = moment(obj.datetime);
-    }
+    // if (obj.datetime) {
+    //   obj.datetime = moment(obj.datetime);
+    // }
 
     for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {

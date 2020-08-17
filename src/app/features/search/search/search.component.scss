@@ -8,5 +8,11 @@
     ngx-simplebar {
       height: 100%;
     }
+    mat-list-item {
+      button {
+        text-align: left;
+        width: 100%;
+      }
+    }
   }
 }

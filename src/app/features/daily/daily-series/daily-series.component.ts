@@ -2,7 +2,10 @@ import { Component, OnInit, Input, Inject, LOCALE_ID } from '@angular/core';
 import { EChartOption } from 'echarts';
 import { formatDate } from '@angular/common';
 import { DataService } from 'src/app/core/services/data.service';
-import { take } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { firestore } from 'firebase/app';
+import Timestamp = firestore.Timestamp;
+
 
 @Component({
   selector: 'app-daily-series',
@@ -61,15 +64,17 @@ export class DailySeriesComponent implements OnInit {
   constructor(private dataService: DataService, @Inject(LOCALE_ID) private locale: string) { }
 
   ngOnInit(): void {
-    this.dataService.parseCompleted()
-      .pipe(take(1))
-      .subscribe(() => {
-        const city = this.dataService.getCityData(this.cityId);
-        const [axis, occurr, deaths] = city
+    this.dataService.getCityData(this.cityId)
+      .subscribe((city) => {
+        const docs = city.docs;
+        const [axis, occurr, deaths] = docs
+          .filter((doc) => {
+            return doc.get('datetime').toMillis;
+          })
           .reduce((array, record) => {
-            array[0].push(record.datetime.valueOf());
-            array[1].push(record.new_occurr);
-            array[2].push(record.new_deaths);
+            array[0].push(record.get('datetime').toMillis());
+            array[1].push(record.get('new_occurr'));
+            array[2].push(record.get('new_deaths'));
             return array;
           }, [[], [], []]);
 

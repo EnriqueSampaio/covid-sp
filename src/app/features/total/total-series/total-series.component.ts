@@ -1,6 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, Inject, LOCALE_ID, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Inject, LOCALE_ID } from '@angular/core';
 import { DataService } from 'src/app/core/services/data.service';
-import { EChartOption, EChartsOptionConfig } from 'echarts';
+import { EChartOption } from 'echarts';
 import { take } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
 import '../../../shared/themes/brabo';
@@ -62,15 +62,17 @@ export class TotalSeriesComponent implements OnInit {
   constructor(private dataService: DataService, @Inject(LOCALE_ID) private locale: string) { }
 
   ngOnInit(): void {
-    this.dataService.parseCompleted()
-      .pipe(take(1))
-      .subscribe(() => {
-        const city = this.dataService.getCityData(this.cityId);
-        const [axis, occurr, deaths] = city
+    this.dataService.getCityData(this.cityId)
+      .subscribe((city) => {
+        const docs = city.docs;
+        const [axis, occurr, deaths] = docs
+          .filter((doc) => {
+            return doc.get('datetime').toMillis;
+          })
           .reduce((array, record) => {
-            array[0].push(record.datetime.valueOf());
-            array[1].push(record.occurr);
-            array[2].push(record.deaths);
+            array[0].push(record.get('datetime').toMillis());
+            array[1].push(record.get('occurr'));
+            array[2].push(record.get('deaths'));
             return array;
           }, [[], [], []]);
 
