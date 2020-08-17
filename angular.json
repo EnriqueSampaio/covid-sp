@@ -53,7 +53,7 @@
                 },
                 {
                   "replace": "src/index.html",
-                  "with": "src/environments/index.prod.html"
+                  "with": "src/index.prod.html"
                 }
               ],
               "optimization": true,
