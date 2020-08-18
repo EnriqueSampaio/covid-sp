@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { finalize } from 'rxjs/operators';
 import { ReplaySubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -130,7 +131,7 @@ export class DataService {
     // };
     // this.papa.parse(environment.source, config);
 
-    this.http.get('http://servicodados.ibge.gov.br/api/v2/malhas/35?formato=application/vnd.geo+json')
+    this.http.get(environment.geo)
       .pipe(finalize(() => this._geoCompleted.next()))
       .subscribe((geo) => {
         // console.log(geo);
